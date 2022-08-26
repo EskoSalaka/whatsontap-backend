@@ -27,7 +27,7 @@ jobs:
           npm run build --if-present
 
       - name: Zip all files for upload between jobs
-          run: zip app.zip ./* 
+        run: zip app.zip ./*
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
@@ -56,6 +56,6 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E50197CCACCB4FD49C5FF6F0DCBF7376 }}
           package: app.zip
-      
+
       - name: Delete zip file
-         run: rm app.zip
+        run: rm app.zip
