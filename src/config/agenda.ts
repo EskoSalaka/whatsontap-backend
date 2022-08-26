@@ -17,6 +17,5 @@ agenda.define('update one pint pub', async (job: Job) => {
     skipImmediate: false
   })
 
-  agenda.now('update one pint pub')
   logger.info('Agenda started')
 })()
