@@ -27,7 +27,7 @@ jobs:
           npm run build --if-present
 
       - name: Zip all files for upload between jobs
-        run: tar.exe -x -f out.zip
+        run: tar.exe -x -f app.zip
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
