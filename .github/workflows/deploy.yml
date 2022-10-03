@@ -1,11 +1,13 @@
 # This is a basic workflow to help you get started with Actions
-name: CI
+name: DEPLOY
 
 on:
   push:
     branches: [ "master" ]
+    paths: ['src/**']
   pull_request:
     branches: [ "master" ]
+    paths: ['src/**']
   workflow_dispatch:
 
 
@@ -18,3 +20,5 @@ jobs:
         run: npm ci
       - name: npm run build
         run: npm run build
+      - name: start the app
+        run: pm2 start
