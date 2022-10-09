@@ -2,8 +2,8 @@ import mongoose from 'mongoose'
 
 export interface IBrewery {
   name: string
-  location: string
-  untappdUrl: string
+  location?: string
+  untappdUrl?: string
 }
 
 export interface IBeer {
