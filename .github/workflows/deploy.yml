@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: run npm ci
-        run: npm ci --production
+        run: npm ci --include=dev
       - name: npm run build
         run: npm run build
       - name: start the app
