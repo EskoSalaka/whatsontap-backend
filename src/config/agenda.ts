@@ -9,7 +9,13 @@ const agenda: Agenda = new Agenda({
 // Define and schedule all jobs
 agenda.define('update one pint pub', async (job: Job) => {
   logger.info('Running agenda job')
-  await crawlOnePintPub()
+
+  try {
+    await crawlOnePintPub()
+  } catch (error) {
+    logger.error(error)
+  }
+  
 })
 ;(async function () {
   await agenda.start()

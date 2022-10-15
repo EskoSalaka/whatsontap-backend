@@ -73,7 +73,9 @@ let crawlOnePintPub = async () => {
     headless: true,
     args: [
       '--disable-web-security',
-      '--disable-features=IsolateOrigins,site-per-process'
+      '--disable-features=IsolateOrigins,site-per-process',
+      '--no-sandbox', 
+      '--disable-setuid-sandbox'
     ]
   })
   const page = await browser.newPage()
