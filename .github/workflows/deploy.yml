@@ -13,12 +13,32 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: run npm ci
-        run: npm ci --prefer-offline --no-audit
+        run: npm ci
       - name: npm run build
         run: npm run build
+      - name: Zip Folder
+        run: zip -r release.zip .
+      - name: setup dist
+        uses: actions/upload-artifact@v3
+        with:
+          name: backend-build
+          path: ./release.zip
+            
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Download build
+        uses: actions/download-artifact@v3
+        with:
+          name: backend-build
+          path: .
+      - name: unzip
+        run: unzip ./release.zip
       - name: start the app
         run: pm2 start
+        
