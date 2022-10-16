@@ -40,5 +40,5 @@ jobs:
       - name: unzip
         run: unzip -o ./release.zip
       - name: start the app
-        run: pm2 start
+        run: sudo pm2 start
         
