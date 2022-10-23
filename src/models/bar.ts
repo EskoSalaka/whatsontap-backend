@@ -5,6 +5,7 @@ export interface IBar {
   name: string
   address?: string
   googlePlusCode: String
+  googleMapsLink: string
   phoneNumber?: String
   latestBeerLists: IBeerList[]
   url: string
@@ -18,6 +19,7 @@ const barSchema = new mongoose.Schema<IBar>(
     },
     address: String,
     googlePlusCode: String,
+    googleMapsLink: String,
     phoneNumber: String,
     url: String,
     latestBeerLists: [BeerList.schema] // Contains only the latest beer lists of each type (not refs)
