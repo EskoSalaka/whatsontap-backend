@@ -7,7 +7,9 @@ let bars: IBar[] = [
     googlePlusCode: '5W6C+R3 Helsinki',
     phoneNumber: '+35895626101',
     latestBeerLists: [],
-    url: 'https://www.onepintpub.com/'
+    url: 'https://www.onepintpub.com/',
+    googleMapsLink: 'https://g.page/onepintpub?share',
+    crawlUrl: 'https://www.onepintpub.com/beer-menu'
   }
 ]
 
