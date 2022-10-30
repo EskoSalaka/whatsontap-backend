@@ -33,7 +33,7 @@ agenda.define('update captain corvus', async (job: Job) => {
   await agenda.every('00 06,17 * * *', 'update one pint pub', {
     skipImmediate: false
   })
-  await agenda.now('update captain corvus', {
+  await agenda.every('05 06,17 * * *', 'update captain corvus', {
     skipImmediate: false
   })
 
