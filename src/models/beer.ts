@@ -4,6 +4,7 @@ export interface IBrewery {
   name: string
   location?: string
   untappdUrl?: string
+  url?: string
 }
 
 export interface IBeer {
@@ -25,7 +26,8 @@ const brewerySchema = new mongoose.Schema<IBrewery>(
       required: true
     },
     location: String,
-    untappdUrl: String
+    untappdUrl: String,
+    url: String
   },
 
   {
