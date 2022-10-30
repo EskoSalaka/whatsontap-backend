@@ -90,8 +90,10 @@ export const crawl = async (barName: IBar['name'], parser: Function) => {
     (beerList) => beerList.type === 'DRAFT'
   )
 
+  console.log(latestDraftList)
+
   if (
-    latestDraftList &&
+    !latestDraftList ||
     _.isEqual(
       latestDraftList.beers.map((beer) => beer.name).sort(),
       draftList.beers.map((beer) => beer.name).sort()
