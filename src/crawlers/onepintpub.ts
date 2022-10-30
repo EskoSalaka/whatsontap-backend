@@ -1,10 +1,7 @@
 import puppeteer from 'puppeteer'
-import logger from '../config/logger'
-import Bar from '../models/bar'
 import { IBeer } from '../models/beer'
-import BeerList, { BeerListType, IBeerList } from '../models/beer-list'
+import { BeerListType, IBeerList } from '../models/beer-list'
 import { awaitAll, getHref, getImgSrc, getTextContent } from './util'
-let s: puppeteer.Page
 
 let parsePage = async (
   page: puppeteer.Page
@@ -66,37 +63,4 @@ let getBeer = async (el: puppeteer.ElementHandle<Element>): Promise<IBeer> => {
   return beer
 }
 
-let crawlOnePintPub = async () => {
-  logger.info('Crawling onepintpub beers')
-
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: [
-      '--disable-web-security',
-      '--disable-features=IsolateOrigins,site-per-process',
-      '--no-sandbox', 
-      '--disable-setuid-sandbox'
-    ]
-  })
-  const page = await browser.newPage()
-  await page.goto('https://www.onepintpub.com/beer-menu', {
-    waitUntil: 'networkidle0'
-  })
-
-  let draftList = await parsePage(page)
-  logger.info('Beer list from One pint pub crawled')
-  logger.info(JSON.stringify(draftList, null, 4))
-
-  let onePintPub = await Bar.findOne({ name: 'One pint pub' })
-  let onePintPubDraftList = await BeerList.create({
-    ...draftList,
-    bar: onePintPub._id
-  })
-
-  // Sync the latest draft list at the bar document
-  onePintPub.latestBeerLists = [onePintPubDraftList]
-  await onePintPub.save()
-  await browser.close()
-}
-
-export default crawlOnePintPub
+export default parsePage

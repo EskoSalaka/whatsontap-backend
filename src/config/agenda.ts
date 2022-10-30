@@ -1,5 +1,7 @@
 import Agenda, { Job } from 'agenda'
-import crawlOnePintPub from '../crawlers/onepintpub'
+import parseOnePintPub from '../crawlers/onepintpub'
+import parseCaptainCorvus from '../crawlers/captaincorvus'
+import { crawl } from '../crawlers/util'
 import logger from './logger'
 
 const agenda: Agenda = new Agenda({
@@ -11,15 +13,27 @@ agenda.define('update one pint pub', async (job: Job) => {
   logger.info('Running agenda job')
 
   try {
-    await crawlOnePintPub()
+    await crawl('One pint pub', parseOnePintPub)
   } catch (error) {
     logger.error(error)
   }
-  
+})
+
+agenda.define('update captain corvus', async (job: Job) => {
+  logger.info('Running agenda job')
+
+  try {
+    await crawl('Captain Corvus', parseCaptainCorvus)
+  } catch (error) {
+    logger.error(error)
+  }
 })
 ;(async function () {
   await agenda.start()
   await agenda.every('00 06,17 * * *', 'update one pint pub', {
+    skipImmediate: false
+  })
+  await agenda.now('update captain corvus', {
     skipImmediate: false
   })
 
