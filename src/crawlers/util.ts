@@ -119,5 +119,7 @@ export const crawl = async (barName: IBar['name'], parser: Function) => {
     await browser.close()
 
     throw error
+  } finally {
+    await browser.close()
   }
 }
