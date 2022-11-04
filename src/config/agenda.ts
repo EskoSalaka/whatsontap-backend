@@ -15,6 +15,7 @@ agenda.define('update one pint pub', async (job: Job) => {
   try {
     await crawl('One pint pub', parseOnePintPub)
   } catch (error) {
+    logger.error('error crawling One pint pub')
     logger.error(error)
   }
 })
@@ -25,6 +26,7 @@ agenda.define('update captain corvus', async (job: Job) => {
   try {
     await crawl('Captain Corvus', parseCaptainCorvus)
   } catch (error) {
+    logger.error('error crawling Captain Corvus')
     logger.error(error)
   }
 })
