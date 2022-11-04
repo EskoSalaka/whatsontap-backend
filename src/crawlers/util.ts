@@ -120,6 +120,6 @@ export const crawl = async (barName: IBar['name'], parser: Function) => {
 
     throw error
   } finally {
-    await browser.close()
+    if (browser && browser.process() != null) browser.process().kill('SIGINT')
   }
 }
