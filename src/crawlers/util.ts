@@ -72,41 +72,52 @@ export const crawl = async (barName: IBar['name'], parser: Function) => {
     args: [
       '--disable-web-security',
       '--disable-features=IsolateOrigins,site-per-process',
+      '--single-process',
+      '--no-zygote',
       '--no-sandbox',
       '--disable-setuid-sandbox'
     ]
   })
-  const page = await browser.newPage()
-  await page.goto(barDoc.crawlUrl, {
-    waitUntil: 'networkidle0'
-  })
 
-  let draftList: IBeerList = await parser(page)
-  logger.info(`Beer list from ${barDoc.name} crawled`)
-  logger.info(JSON.stringify(draftList, null, 4))
-
-  // Save a new list only if theres something new in the one we just crawled
-  let latestDraftList: IBeerList | undefined = barDoc.latestBeerLists.find(
-    (beerList) => beerList.type === 'DRAFT'
-  )
-
-  if (
-    !latestDraftList ||
-    !_.isEqual(
-      latestDraftList.beers.map((beer) => beer.name).sort(),
-      draftList.beers.map((beer) => beer.name).sort()
-    )
-  ) {
-    let newDraftList = await BeerList.create({
-      ...draftList,
-      bar: barDoc._id
+  try {
+    const page = await browser.newPage()
+    await page.goto(barDoc.crawlUrl, {
+      waitUntil: 'networkidle0'
     })
 
-    // Sync the latest draft list at the bar document
-    barDoc.latestBeerLists = [newDraftList]
-    await barDoc.save()
+    let draftList: IBeerList = await parser(page)
+    logger.info(`Beer list from ${barDoc.name} crawled`)
+    logger.info(JSON.stringify(draftList, null, 4))
+
+    // Save a new list only if theres something new in the one we just crawled
+    let latestDraftList: IBeerList | undefined = barDoc.latestBeerLists.find(
+      (beerList) => beerList.type === 'DRAFT'
+    )
+
+    if (
+      !latestDraftList ||
+      !_.isEqual(
+        latestDraftList.beers.map((beer) => beer.name).sort(),
+        draftList.beers.map((beer) => beer.name).sort()
+      )
+    ) {
+      let newDraftList = await BeerList.create({
+        ...draftList,
+        bar: barDoc._id
+      })
+
+      // Sync the latest draft list at the bar document
+      barDoc.latestBeerLists = [newDraftList]
+      await barDoc.save()
+      await browser.close()
+    } else {
+      logger.info(`No new beers at ${barDoc.name}`)
+    }
+  } catch (error) {
+    logger.error('Error in crawling page')
+    logger.error(error)
     await browser.close()
-  } else {
-    logger.info(`No new beers at ${barDoc.name}`)
+
+    throw error
   }
 }
