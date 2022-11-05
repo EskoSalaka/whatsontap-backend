@@ -10,6 +10,7 @@ export interface IBar {
   latestBeerLists: IBeerList[]
   url: string
   crawlUrl: string
+  lastCrawledAt?: Date
   createdAt: Date
   updatedAt: Date
 }
@@ -26,6 +27,7 @@ const barSchema = new mongoose.Schema<IBar>(
     phoneNumber: String,
     url: String,
     crawlUrl: String,
+    lastCrawledAt: String,
     latestBeerLists: [BeerList.schema] // Contains only the latest beer lists of each type (not refs)
   },
   {
