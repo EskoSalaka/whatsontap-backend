@@ -9,7 +9,9 @@ let bars: IBar[] = [
     latestBeerLists: [],
     url: 'https://www.onepintpub.com/',
     googleMapsLink: 'https://g.page/onepintpub?share',
-    crawlUrl: 'https://www.onepintpub.com/beer-menu'
+    crawlUrl: 'https://www.onepintpub.com/beer-menu',
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'Captain Corvus',
@@ -19,7 +21,9 @@ let bars: IBar[] = [
     latestBeerLists: [],
     url: 'http://www.captaincorvus.fi/',
     googleMapsLink: 'https://goo.gl/maps/Agd1tkwEUtjtVPSg8',
-    crawlUrl: 'http://www.captaincorvus.fi/valikoima/'
+    crawlUrl: 'http://www.captaincorvus.fi/valikoima/',
+    createdAt: new Date(),
+    updatedAt: new Date()
   }
 ]
 
