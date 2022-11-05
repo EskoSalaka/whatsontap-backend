@@ -10,6 +10,8 @@ export interface IBar {
   latestBeerLists: IBeerList[]
   url: string
   crawlUrl: string
+  createdAt: string
+  updatedAt: string
 }
 
 const barSchema = new mongoose.Schema<IBar>(
