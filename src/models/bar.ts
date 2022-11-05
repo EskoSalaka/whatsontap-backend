@@ -27,7 +27,7 @@ const barSchema = new mongoose.Schema<IBar>(
     phoneNumber: String,
     url: String,
     crawlUrl: String,
-    lastCrawledAt: String,
+    lastCrawledAt: Date,
     latestBeerLists: [BeerList.schema] // Contains only the latest beer lists of each type (not refs)
   },
   {
