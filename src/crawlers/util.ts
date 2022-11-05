@@ -112,6 +112,7 @@ export const crawl = async (barName: IBar['name'], parser: Function) => {
     }
 
     // Save the doc anyway to update the updatedAt-field to indicate that information has been retrieved
+    barDoc.updatedAt = new Date().toISOString()
     await barDoc.save()
     await browser.close()
   } catch (error) {
