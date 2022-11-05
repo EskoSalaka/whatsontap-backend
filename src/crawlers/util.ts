@@ -106,13 +106,14 @@ export const crawl = async (barName: IBar['name'], parser: Function) => {
         bar: barDoc._id
       })
 
-      // Sync the latest draft list at the bar document
       barDoc.latestBeerLists = [newDraftList]
-      await barDoc.save()
-      await browser.close()
     } else {
       logger.info(`No new beers at ${barDoc.name}`)
     }
+
+    // Save the doc anyway to update the updatedAt-field to indicate that information has been retrieved
+    await barDoc.save()
+    await browser.close()
   } catch (error) {
     logger.error('Error in crawling page')
     logger.error(error)
