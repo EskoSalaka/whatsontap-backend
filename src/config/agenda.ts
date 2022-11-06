@@ -50,8 +50,7 @@ agenda.define('update captain corvus', async (job: Job) => {
   await agenda.every('05 06,17 * * *', 'update captain corvus', {
     skipImmediate: false
   })
-
-  await agenda.every('11 06,17 * * *', 'update captain corvus', {
+  await agenda.every('11 06,17 * * *', 'update black door', {
     skipImmediate: false
   })
 
