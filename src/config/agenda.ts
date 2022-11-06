@@ -1,6 +1,7 @@
 import Agenda, { Job } from 'agenda'
 import parseOnePintPub from '../crawlers/onepintpub'
 import parseCaptainCorvus from '../crawlers/captaincorvus'
+import parseBlackDoor from '../crawlers/blackdoor'
 import { crawl } from '../crawlers/util'
 import logger from './logger'
 
@@ -16,6 +17,17 @@ agenda.define('update one pint pub', async (job: Job) => {
     await crawl('One pint pub', parseOnePintPub)
   } catch (error) {
     logger.error('error crawling One pint pub')
+    logger.error(error)
+  }
+})
+
+agenda.define('update black door', async (job: Job) => {
+  logger.info('Running agenda job')
+
+  try {
+    await crawl('Black Door', parseBlackDoor)
+  } catch (error) {
+    logger.error('error crawling Black Door')
     logger.error(error)
   }
 })
@@ -36,6 +48,10 @@ agenda.define('update captain corvus', async (job: Job) => {
     skipImmediate: false
   })
   await agenda.every('05 06,17 * * *', 'update captain corvus', {
+    skipImmediate: false
+  })
+
+  await agenda.every('11 06,17 * * *', 'update captain corvus', {
     skipImmediate: false
   })
 
