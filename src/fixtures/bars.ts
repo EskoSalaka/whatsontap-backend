@@ -24,6 +24,18 @@ let bars: IBar[] = [
     crawlUrl: 'http://www.captaincorvus.fi/valikoima/',
     createdAt: new Date(),
     updatedAt: new Date()
+  },
+  {
+    name: 'Black Door',
+    address: 'Iso Roobertinkatu 1, 00120 Helsinki',
+    googlePlusCode: '5W7V+MF Helsinki',
+    phoneNumber: '+358 504064614',
+    latestBeerLists: [],
+    url: 'https://blackdoor.fi',
+    googleMapsLink: 'https://goo.gl/maps/KHu7cruuCZVuJUuG6',
+    crawlUrl: 'https://blackdoor.fi/#beer',
+    createdAt: new Date(),
+    updatedAt: new Date()
   }
 ]
 
