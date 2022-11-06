@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer'
-import { IBeer } from '../models/beer'
+import logger from '../config/logger'
+import { IBeer, IBrewery } from '../models/beer'
 import { BeerListType, IBeerList } from '../models/beer-list'
 import { awaitAll, getHref, getImgSrc, getTextContent } from './util'
 
@@ -41,6 +42,7 @@ let getBeer = async (el: puppeteer.ElementHandle<Element>): Promise<IBeer> => {
   let detailsContent = await el.$('.item-meta')
   let descriptionContent = await el.$('.item-description')
   let labelContent = await el.$('.item-label')
+  let breweryContent = await el.$('span.brewery')
 
   // The name is mandatory, function throws an error on case name cant be extracted
   let beer: IBeer = {
@@ -59,6 +61,24 @@ let getBeer = async (el: puppeteer.ElementHandle<Element>): Promise<IBeer> => {
   beer.ibu = await getTextContent(detailsContent, 'span.ibu')
   beer.abv = await getTextContent(detailsContent, 'span.abv')
   beer.description = await getTextContent(descriptionContent, 'p.show-less')
+
+  try {
+    let brewery: IBrewery = {
+      name: (
+        await breweryContent.$eval('.item-title-color', (_) => _.textContent)
+      )
+        .replace(/^[^.]+\./, '')
+        .trim()
+    }
+    brewery.untappdUrl = await getHref(breweryContent, '.item-title-color')
+
+    beer.brewery = brewery
+
+    console.log(brewery)
+  } catch (error) {
+    logger.error('Unable to read the brewery of beer ' + beer.name)
+    logger.error(error)
+  }
 
   return beer
 }
