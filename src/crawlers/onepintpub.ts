@@ -66,9 +66,7 @@ let getBeer = async (el: puppeteer.ElementHandle<Element>): Promise<IBeer> => {
     let brewery: IBrewery = {
       name: (
         await breweryContent.$eval('.item-title-color', (_) => _.textContent)
-      )
-        .replace(/^[^.]+\./, '')
-        .trim()
+      ).trim()
     }
     brewery.untappdUrl = await getHref(breweryContent, '.item-title-color')
 
