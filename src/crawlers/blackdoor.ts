@@ -66,8 +66,6 @@ let getBeer = async (el: puppeteer.ElementHandle<Element>): Promise<IBeer> => {
     brewery.untappdUrl = await getHref(breweryContent, '.item-title-color')
 
     beer.brewery = brewery
-
-    console.log(brewery)
   } catch (error) {
     logger.error('Unable to read the brewery of beer ' + beer.name)
     logger.error(error)
