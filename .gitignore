@@ -9,3 +9,4 @@
 coverage
 logs/
 *.log
+src/test.ts
