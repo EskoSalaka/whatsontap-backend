@@ -2,6 +2,8 @@ import Agenda, { Job } from 'agenda'
 import parseOnePintPub from '../crawlers/onepintpub'
 import parseCaptainCorvus from '../crawlers/captaincorvus'
 import parseBlackDoor from '../crawlers/blackdoor'
+import parseBierhausBerlin from '../crawlers/biearhausberlin'
+import parseBierhausMunchen from '../crawlers/bierhausmunchen'
 import { crawl } from '../crawlers/util'
 import logger from './logger'
 
@@ -10,6 +12,28 @@ const agenda: Agenda = new Agenda({
 })
 
 // Define and schedule all jobs
+agenda.define('update bierhaus munchen', async (job: Job) => {
+  logger.info('Running agenda job')
+
+  try {
+    await crawl('Bierhaus Munchen', parseBierhausMunchen)
+  } catch (error) {
+    logger.error('error crawling Bierhaus Munchen')
+    logger.error(error)
+  }
+})
+
+agenda.define('update bierhaus berlin', async (job: Job) => {
+  logger.info('Running agenda job')
+
+  try {
+    await crawl('Bierhaus Munchen', parseBierhausBerlin)
+  } catch (error) {
+    logger.error('error crawling Bierhaus Munchen')
+    logger.error(error)
+  }
+})
+
 agenda.define('update one pint pub', async (job: Job) => {
   logger.info('Running agenda job')
 
@@ -51,6 +75,12 @@ agenda.define('update captain corvus', async (job: Job) => {
     skipImmediate: false
   })
   await agenda.every('11 06,17 * * *', 'update black door', {
+    skipImmediate: false
+  })
+  await agenda.every('17 06,17 * * *', 'update bierhaus berlin', {
+    skipImmediate: false
+  })
+  await agenda.every('21 06,17 * * *', 'update bierhaus munchen', {
     skipImmediate: false
   })
 
