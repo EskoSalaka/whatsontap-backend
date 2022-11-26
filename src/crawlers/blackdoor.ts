@@ -27,7 +27,6 @@ let parsePage = async (
   let draftBeerHandles = await draftBeersTabContent.$$('.item')
   draftList.beers = await awaitAll(draftBeerHandles, getBeer)
 
-  console.log(draftList)
   return draftList
 }
 
