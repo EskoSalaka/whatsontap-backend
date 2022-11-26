@@ -6,6 +6,14 @@ import Bar from '../models/bar'
 import BeerList, { BeerListType, IBeerList } from '../models/beer-list'
 import _ from 'lodash'
 
+export const getElementFullText = async (el: ElementHandle<Element>) => {
+  try {
+    return (await el.getProperty('textContent')).jsonValue()
+  } catch (error: any) {}
+
+  return null
+}
+
 // Returns text content of an element handle with leading/trailing spaces
 // and newlines removed or logs the error and returns null
 export const getTextContent = async (
@@ -124,4 +132,29 @@ export const crawl = async (barName: IBar['name'], parser: Function) => {
   } finally {
     if (browser && browser.process() != null) browser.process().kill('SIGINT')
   }
+}
+
+export const testCrawl = async (url: string, parser: Function) => {
+  logger.info(`testing ${url}`)
+
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: [
+      '--disable-web-security',
+      '--disable-features=IsolateOrigins,site-per-process',
+      '--single-process',
+      '--no-zygote',
+      '--no-sandbox',
+      '--disable-setuid-sandbox'
+    ]
+  })
+
+  const page = await browser.newPage()
+  await page.goto(url, {
+    waitUntil: 'networkidle0'
+  })
+
+  let draftList: IBeerList = await parser(page)
+  logger.info(`Beer list from crawled`)
+  logger.info(JSON.stringify(draftList, null, 4))
 }
