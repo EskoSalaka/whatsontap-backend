@@ -36,6 +36,30 @@ let bars: IBar[] = [
     crawlUrl: 'https://blackdoor.fi/#beer',
     createdAt: new Date(),
     updatedAt: new Date()
+  },
+  {
+    name: 'Bierhaus Munchen',
+    address: 'Töölönlahdenkatu 3 B, 00101 Helsinki',
+    googlePlusCode: '5WFQ+6Q Helsinki',
+    phoneNumber: '+358 451381635',
+    latestBeerLists: [],
+    url: 'https://bierhaus.fi/',
+    googleMapsLink: 'https://g.page/BierhausMunchen?share',
+    crawlUrl: 'https://bierhaus-munchen.listantai.fi/',
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    name: 'Bierhaus Berlin',
+    address: 'Firdonkatu 2, 00520 Helsinki',
+    googlePlusCode: '5WXH+4H Helsinki',
+    phoneNumber: '+358 401646819',
+    latestBeerLists: [],
+    url: 'https://bierhaus.fi/',
+    googleMapsLink: 'https://g.page/BierhausTripla?share',
+    crawlUrl: 'https://bierhaus-berlin.listantai.fi/',
+    createdAt: new Date(),
+    updatedAt: new Date()
   }
 ]
 
