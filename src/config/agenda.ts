@@ -27,9 +27,9 @@ agenda.define('update bierhaus berlin', async (job: Job) => {
   logger.info('Running agenda job')
 
   try {
-    await crawl('Bierhaus Munchen', parseBierhausBerlin)
+    await crawl('Bierhaus Berlin', parseBierhausBerlin)
   } catch (error) {
-    logger.error('error crawling Bierhaus Munchen')
+    logger.error('error crawling Bierhaus Berlin')
     logger.error(error)
   }
 })
