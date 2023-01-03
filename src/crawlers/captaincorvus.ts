@@ -43,8 +43,11 @@ let getBeer = async (el: puppeteer.ElementHandle<Element>): Promise<IBeer> => {
   }
 
   let beer: IBeer = {
-    name: beerTextLine.replace(abv, '').replace('%', '').trim(),
-    brewery: brewery
+    name: beerTextLine.replace(abv, '').replace('%', '').trim()
+  }
+
+  if (brewery.name) {
+    beer.brewery = brewery
   }
 
   if (abv) {
