@@ -34,6 +34,50 @@ agenda.define('update bierhaus berlin', async (job: Job) => {
   }
 })
 
+agenda.define('update stadin panimobaari', async (job: Job) => {
+  logger.info('Running agenda job')
+
+  try {
+    await crawl('Stadin Panimobaari', parseBierhausMunchen)
+  } catch (error) {
+    logger.error('error crawling Stadin Panimobaari')
+    logger.error(error)
+  }
+})
+
+agenda.define('update barski', async (job: Job) => {
+  logger.info('Running agenda job')
+
+  try {
+    await crawl('Barski', parseBierhausMunchen)
+  } catch (error) {
+    logger.error('error crawling Barski')
+    logger.error(error)
+  }
+})
+
+agenda.define('update juova hanahuone', async (job: Job) => {
+  logger.info('Running agenda job')
+
+  try {
+    await crawl('Juova Hanahuone', parseBierhausMunchen)
+  } catch (error) {
+    logger.error('error crawling Juova Hanahuone')
+    logger.error(error)
+  }
+})
+
+agenda.define('update gallows bird tapiola', async (job: Job) => {
+  logger.info('Running agenda job')
+
+  try {
+    await crawl('Gallows Bird Tapiola', parseBierhausMunchen)
+  } catch (error) {
+    logger.error('error crawling Gallows Bird Tapiola')
+    logger.error(error)
+  }
+})
+
 agenda.define('update one pint pub', async (job: Job) => {
   logger.info('Running agenda job')
 
@@ -81,6 +125,19 @@ agenda.define('update captain corvus', async (job: Job) => {
     skipImmediate: false
   })
   await agenda.every('21 06,17 * * *', 'update bierhaus munchen', {
+    skipImmediate: false
+  })
+  await agenda.every('23 06,17 * * *', 'update stadin panimobaari', {
+    skipImmediate: false
+  })
+
+  await agenda.every('27 06,17 * * *', 'update barski', {
+    skipImmediate: false
+  })
+  await agenda.every('30 06,17 * * *', 'update juova hanahuone', {
+    skipImmediate: false
+  })
+  await agenda.every('33 06,17 * * *', 'update gallows bird tapiola', {
     skipImmediate: false
   })
 
