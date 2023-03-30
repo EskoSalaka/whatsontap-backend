@@ -39,6 +39,8 @@ jobs:
           path: .
       - name: unzip
         run: unzip -o ./release.zip
+      - name: add secrets
+        run: export MONGODB_URI=${{ secrets.MONGODB_URI }}
       - name: start the app
         run: sudo pm2 start
         
