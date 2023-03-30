@@ -72,6 +72,9 @@ export const awaitAll = async (list, asyncFn) => {
 }
 
 export const crawl = async (barName: IBar['name'], parser: Function) => {
+  let logText
+  let logStatus
+  let logStatusText
   let barDoc = await Bar.findOne({ name: barName })
   logger.info(`Crawling ${barDoc.name} beers`)
 
@@ -89,6 +92,11 @@ export const crawl = async (barName: IBar['name'], parser: Function) => {
 
   try {
     const page = await browser.newPage()
+    page.on('response', async (response) => {
+      logText = await response.text()
+      logStatus = response.status()
+      logStatusText = response.statusText()
+    })
     await page.goto(barDoc.crawlUrl, {
       waitUntil: 'networkidle0'
     })
@@ -121,11 +129,14 @@ export const crawl = async (barName: IBar['name'], parser: Function) => {
 
     // Save the doc anyway to update the updatedAt-field to indicate that information has been retrieved
     barDoc.lastCrawledAt = new Date()
+
     await barDoc.save()
     await browser.close()
   } catch (error) {
     logger.error('Error in crawling page')
     logger.error(error)
+    logger.error(logStatus)
+    logger.error(logStatusText)
     await browser.close()
 
     throw error
