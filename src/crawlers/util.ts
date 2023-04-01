@@ -137,6 +137,7 @@ export const crawl = async (barName: IBar['name'], parser: Function) => {
     logger.error(error)
     logger.error(logStatus)
     logger.error(logStatusText)
+    logger.error(logText)
     await browser.close()
 
     throw error
