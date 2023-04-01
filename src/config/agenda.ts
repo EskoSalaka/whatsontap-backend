@@ -9,7 +9,9 @@ import { crawl } from '../crawlers/util'
 import logger from './logger'
 
 const agenda: Agenda = new Agenda({
-  db: { address: process.env.MONGODB_URI, collection: 'agendaJobs' }
+  db: { address: process.env.MONGODB_URI, collection: 'agendaJobs' },
+  sort: { nextRunAt: 1 },
+  processEvery: '3 minutes'
 })
 
 // Define and schedule all jobs
