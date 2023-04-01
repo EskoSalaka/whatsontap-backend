@@ -40,7 +40,7 @@ jobs:
       - name: unzip
         run: unzip -o ./release.zip
       - name: add secrets
-        uses: secrethub/actions/env-export@v0.2.1
+        run: export MONGODB_URI=$MONGODB_URI
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
       - name: start the app
