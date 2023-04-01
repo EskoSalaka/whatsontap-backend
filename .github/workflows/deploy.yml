@@ -40,7 +40,9 @@ jobs:
       - name: unzip
         run: unzip -o ./release.zip
       - name: add secrets
-        run: export MONGODB_URI=${{ secrets.MONGODB_URI }}
+      - uses: secrethub/actions/env-export@v0.2.1
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
       - name: start the app
         run: sudo pm2 start
         
